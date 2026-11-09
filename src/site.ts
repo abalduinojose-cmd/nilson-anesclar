@@ -267,7 +267,7 @@ function palavras(el: HTMLElement): void {
  *  140  muro: 5 filas entram de lados alternados, já rolando por dentro
  *  420  foto sobe do pé do quadro saindo do desfoque (rack focus)
  *  520  nome sobe da máscara; 700 papéis colam; 800 bio sai do desfoque palavra a palavra
- * 1000  números; o vídeo das publis já corre por dentro das letras do NILSON
+ * 1000  números; 1050 os dois vídeos sobem do desfoque e passam a flutuar
  * 1150  chamada principal; 1300 Instagram; 1380 YouTube e TikTok; 1500 atalhos
  */
 function abertura(): void {
@@ -279,6 +279,14 @@ function abertura(): void {
     { opacity: 1, transform: 'translateY(' + 9 * K + '%) scale(1.04)', filter: 'blur(14px)' },
     { opacity: 1, transform: 'translateY(0) scale(1)', filter: 'blur(0px)' },
   ], { duracao: 1100, atraso: 420, curva: 'expo' });
+  $$('.voa .entra').forEach((el, i) => {
+    anima(el, [
+      { opacity: 0, transform: 'translateY(' + 60 * K + 'px) scale(.86)', filter: 'blur(12px)' },
+      { opacity: 1, transform: 'translateY(' + 60 * K + 'px) scale(.86)', filter: 'blur(12px)', offset: 0.001 },
+      { opacity: 1, transform: 'translateY(0) scale(1)', filter: 'blur(0px)' },
+    ], { duracao: 1150, atraso: 1050 + i * 200, curva: 'expo' });
+  });
+
   $$('.nome .lt').forEach((l, i) => anima(l, [{ transform: 'translateY(105%)' }, { transform: 'translateY(0)' }], { duracao: 820, atraso: 520 + i * 110, curva: 'expo' }));
   cascata($$('.papel li'), 700, 70, (el, t) => anima(el, chega('scale(.7)', 'scale(1)'), { duracao: 560, atraso: t, curva: 'mola' }));
   cascata($$('#bio .w'), 800, 34, (w, t) => anima(w, [
@@ -305,60 +313,8 @@ void Promise.race([d.fonts.ready, new Promise((r) => setTimeout(r, 1200))]).then
 const hero = $('#hero');
 const muro = $('#muro');
 const foto = $('#foto');
-
-/*
- * Máscara de texto, como um track matte do After Effects: a palavra NILSON é desenhada no canvas
- * e o vídeo das publis é pintado só por cima das letras ("source-atop"; sem quadro de vídeo, fica o creme). A fila anda para a direita
- * no mesmo ritmo das filas de CSS; cada palavra recebe o seu recorte do vídeo.
- */
-const canvasLetras = talvez<HTMLCanvasElement>('#letras');
-const videoLetras = talvez<HTMLVideoElement>('#letrasVideo');
-const ctxLetras = canvasLetras?.getContext('2d') ?? null;
-const PALAVRA = 'NILSON';
-let lw = 0;
-let lh = 0;
-let fonte = 0;
-let passoPalavra = 0;
-
-function medeLetras(): void {
-  if (!canvasLetras || !ctxLetras) return;
-  const dpr = Math.min(2, window.devicePixelRatio || 1);
-  lw = canvasLetras.offsetWidth;
-  lh = canvasLetras.offsetHeight;
-  fonte = parseFloat(getComputedStyle(muro).fontSize);
-  canvasLetras.width = Math.round(lw * dpr);
-  canvasLetras.height = Math.round(lh * dpr);
-  ctxLetras.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctxLetras.font = '900 ' + fonte + 'px Geist, system-ui, sans-serif';
-  (ctxLetras as CanvasRenderingContext2D & { letterSpacing?: string }).letterSpacing = (-0.045 * fonte).toFixed(1) + 'px';
-  ctxLetras.textBaseline = 'alphabetic';
-  passoPalavra = ctxLetras.measureText(PALAVRA).width + fonte * 0.3;
-}
-
-function desenhaLetras(s: number): void {
-  if (!ctxLetras || !lw || !passoPalavra) return;
-  const c = ctxLetras;
-  const desloc = (s * 38 * K) % passoPalavra; // px por segundo, para a direita
-  const base = lh * 0.5 + fonte * 0.36;
-  c.globalCompositeOperation = 'source-over';
-  c.clearRect(0, 0, lw, lh);
-  c.fillStyle = '#FFF4EC';
-  for (let x = -passoPalavra + desloc; x < lw; x += passoPalavra) c.fillText(PALAVRA, x, base);
-  const v = videoLetras;
-  if (v && v.readyState >= 2 && v.videoWidth) {
-    c.globalCompositeOperation = 'source-atop';
-    const proporcao = passoPalavra / lh;
-    const sh = Math.min(v.videoHeight, v.videoWidth / proporcao);
-    const sy = (v.videoHeight - sh) / 2;
-    for (let x = -passoPalavra + desloc; x < lw; x += passoPalavra) c.drawImage(v, 0, sy, v.videoWidth, sh, x, 0, passoPalavra, lh);
-    c.globalCompositeOperation = 'source-atop';
-    c.fillStyle = 'rgba(255,244,236,.1)';
-    c.fillRect(0, 0, lw, lh);
-  }
-  c.globalCompositeOperation = 'source-over';
-}
-void Promise.race([d.fonts.ready, new Promise((r) => setTimeout(r, 1200))]).then(medeLetras);
-addEventListener('resize', medeLetras, { passive: true });
+const voas = $$('.voa');
+const partes = voas.map((v) => ({ barra: $('.prog i', v), video: $<HTMLVideoElement>('video', v) }));
 
 let heroVisivel = true;
 let alvoX = 0;
@@ -378,13 +334,20 @@ hero.addEventListener('pointerleave', () => {
   alvoY = 0;
 });
 
-/** Cada quadro é função do tempo: o vídeo anda dentro das letras e o muro segue a rolagem e o ponteiro. */
+/** Cada quadro é função do tempo: os vídeos flutuam devagar, em fases diferentes, e seguem a rolagem e o ponteiro. */
 function quadroHero(agora: number): void {
   const s = agora / 1000;
   ponteiroX += (alvoX - ponteiroX) * 0.07;
   ponteiroY += (alvoY - ponteiroY) * 0.07;
   const rolagem = desk.matches ? 0 : Math.min(scrollY, heroAltura);
-  desenhaLetras(s);
+  voas.forEach((v, i) => {
+    const fase = Number(v.dataset.fase ?? 0);
+    const y = Math.sin(s * (0.9 + i * 0.15) + fase) * 9 * K - rolagem * (0.22 + i * 0.1) * K + ponteiroY * (16 + i * 8);
+    const x = ponteiroX * (24 + i * 14);
+    v.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+    const p = partes[i];
+    if (p.video.duration) p.barra.style.transform = 'scaleX(' + (p.video.currentTime / p.video.duration).toFixed(4) + ')';
+  });
   muro.style.translate = (ponteiroX * -20).toFixed(1) + 'px calc(-50% + ' + (ponteiroY * -14 + rolagem * 0.4 * K).toFixed(1) + 'px)';
   foto.style.translate = (ponteiroX * 9).toFixed(1) + 'px ' + (rolagem * 0.12 * K).toFixed(1) + 'px';
   if (heroVisivel) requestAnimationFrame(quadroHero);
@@ -402,7 +365,7 @@ const ioParado = new IntersectionObserver((es) => {
       const era = heroVisivel;
       heroVisivel = e.isIntersecting;
       if (heroVisivel && !era) requestAnimationFrame(quadroHero);
-      if (videoLetras) e.isIntersecting && !playerAberto ? void videoLetras.play().catch(() => undefined) : videoLetras.pause();
+      partes.forEach((p) => (e.isIntersecting && !playerAberto ? void p.video.play().catch(() => undefined) : p.video.pause()));
     }
   });
 });

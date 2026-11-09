@@ -72,10 +72,20 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 .fila.cheia{color:var(--creme)}
 .fila.contorno{color:transparent;-webkit-text-stroke:2px rgba(255,244,236,.72)}
 .fila.tom{color:#E5420B}
-.fila.video{position:relative;height:.84em}
-.fila.video canvas{display:block;width:100%;height:100%}
 .foto{position:absolute;left:50%;bottom:0;width:var(--fw);margin-left:calc(var(--fw) / -2);z-index:2}
 .foto img{width:100%;aspect-ratio:1}
+.voa{position:absolute;z-index:3;will-change:transform}
+.voa.a{left:4%;top:17%}
+.voa.b{right:4%;top:43%}
+.cartao{position:relative;display:block;width:clamp(100px, 30cqi, 176px);aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;
+  box-shadow:0 0 0 1.5px rgba(255,244,236,.7), 0 30px 50px -18px rgba(70,12,0,.7)}
+.cartao video,.cartao img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cartao::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,11,.45), rgba(10,10,11,0) 30%);pointer-events:none}
+.cartao .rot{position:absolute;left:8px;top:8px;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;
+  background:rgba(10,10,11,.55);color:var(--creme);font:700 clamp(.64rem, 2.8cqi, .78rem)/1 var(--sans);white-space:nowrap;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.cartao .rot i{width:7px;height:7px;border-radius:50%;background:var(--yt);animation:aovivo 1.6s ease-out infinite}
+.cartao .prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.25);z-index:2}
+.cartao .prog i{display:block;height:100%;background:var(--lar);transform-origin:0 50%;transform:scaleX(0)}
 
 /* ================= conteúdo ================= */
 .conteudo{padding:0 var(--pad) calc(26px + var(--safe-b))}
@@ -350,7 +360,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 @media (hover:hover){.lb-base a:hover{color:var(--tx)}}
 
 /* estados iniciais (só com JS) */
-.js .fila-h,.js .foto,.js .papel li,.js .numeros li,.js .cta,.js .igc,.js .soc,.js .at,.js .gm{opacity:0}
+.js .fila-h,.js .entra,.js .foto,.js .papel li,.js .numeros li,.js .cta,.js .igc,.js .soc,.js .at,.js .gm{opacity:0}
 .js .nome .lt,.js .titulo .w>span{transform:translateY(105%)}
 .js .bio .w{opacity:0}
 
@@ -359,6 +369,9 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
   body{display:grid;grid-template-columns:minmax(0, 46vw) minmax(0,1fr)}
   .palco-hero{position:sticky;top:0;height:100vh;border-radius:0 32px 32px 0;--fw:min(100cqi, 92vh, 820px)}
   .muro{font-size:min(31cqi, 21vh)}
+  .voa.a{left:7%;top:16%}
+  .voa.b{right:7%;top:46%}
+  .cartao{width:clamp(120px, 24cqi, 196px)}
   .conteudo{padding:56px clamp(32px, 5vw, 80px) 40px;max-width:720px}
   .perfil{padding-top:0}
   .nome{font-size:clamp(3rem, 4.6vw, 4.4rem)}
@@ -402,12 +415,17 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 <header class="palco-hero" id="hero">
   <div class="muro" id="muro" aria-hidden="true">
     <div class="fila fila-h contorno"><div class="rola" style="--d:34s"><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span></div></div>
-    <div class="fila fila-h video"><canvas id="letras" aria-hidden="true"></canvas></div>
+    <div class="fila fila-h cheia rev"><div class="rola" style="--d:22s"><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span></div></div>
     <div class="fila fila-h tom rev"><div class="rola" style="--d:28s"><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span></div></div>
     <div class="fila fila-h contorno"><div class="rola" style="--d:38s"><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span></div></div>
   </div>
   <div class="foto" id="foto"><img src="img/nilson.webp" alt="Nilson Anesclar, humorista" width="900" height="900" fetchpriority="high"></div>
-  <video id="letrasVideo" src="img/letras.mp4" muted playsinline loop autoplay preload="auto" aria-hidden="true" style="position:absolute;width:2px;height:2px;opacity:0;pointer-events:none;left:0;top:0"></video>
+  <div class="voa a" data-fase="0"><div class="entra"><span class="cartao">
+    <img src="img/clip-publi.jpg" alt="" width="270" height="480"><video src="img/clip-publi.mp4" muted playsinline loop autoplay preload="auto"></video>
+    <span class="rot"><i></i>Publis</span><span class="prog"><i></i></span></span></div></div>
+  <div class="voa b" data-fase="2.1"><div class="entra"><span class="cartao">
+    <img src="img/clip-standup.jpg" alt="" width="270" height="480"><video src="img/clip-standup.mp4" muted playsinline loop autoplay preload="auto"></video>
+    <span class="rot"><i></i>Stand up</span><span class="prog"><i></i></span></span></div></div>
 </header>
 
 <main class="conteudo">
