@@ -75,13 +75,13 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 .foto{position:absolute;left:50%;bottom:0;width:var(--fw);margin-left:calc(var(--fw) / -2);z-index:2}
 .foto img{width:100%;aspect-ratio:1}
 .voa{position:absolute;z-index:3;will-change:transform}
-.voa.a{left:4%;top:17%}
-.voa.b{right:4%;top:43%}
-.cartao{position:relative;display:block;width:clamp(100px, 30cqi, 176px);aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;
+.voa.a{left:-1%;top:12%}
+.voa.b{right:-1%;top:41%}
+.cartao{position:relative;display:block;width:clamp(112px, 32cqi, 204px);aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;
   box-shadow:0 0 0 1.5px rgba(255,244,236,.7), 0 30px 50px -18px rgba(70,12,0,.7)}
 .cartao video,.cartao img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .cartao::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,11,.45), rgba(10,10,11,0) 30%);pointer-events:none}
-.cartao .rot{position:absolute;left:8px;top:8px;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;
+.cartao .rot{position:absolute;left:8px;top:8px;max-width:calc(100% - 16px);overflow:hidden;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;
   background:rgba(10,10,11,.55);color:var(--creme);font:700 clamp(.64rem, 2.8cqi, .78rem)/1 var(--sans);white-space:nowrap;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .cartao .rot i{width:7px;height:7px;border-radius:50%;background:var(--yt);animation:aovivo 1.6s ease-out infinite}
 .cartao .prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.25);z-index:2}
@@ -90,14 +90,17 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 /* ================= conteúdo ================= */
 .conteudo{padding:0 var(--pad) calc(26px + var(--safe-b))}
 .perfil{padding-top:28px}
-.nome{margin:0;font:800 clamp(2.4rem, 10.5vw, 3.4rem)/.98 var(--sans);letter-spacing:-.04em}
-.nome .ln{display:inline-block;overflow:hidden;padding-bottom:.06em;vertical-align:bottom}
+.nome{margin:0;font:850 clamp(2.9rem, 13.5vw, 4rem)/.9 var(--sans);letter-spacing:-.045em}
+.nome .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.nome .ln+.ln{margin-top:-.04em}
 .nome .lt{display:inline-block}
-.papel{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0;padding:0;list-style:none}
-.papel li{padding:6px 11px;border-radius:999px;border:1px solid var(--line);font:550 .8rem/1 var(--sans);color:var(--mut)}
-.papel li:first-child{background:var(--lar);border-color:var(--lar);color:var(--bg)}
-.bio{margin:14px 0 0;font:400 1.1rem/1.45 var(--sans);color:var(--mut);max-width:34ch}
-.bio em{color:var(--tx);font-size:1.18em}
+.nome .ln:last-child .lt{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em;color:var(--lar);font-size:1.08em}
+.papel{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;padding:0;list-style:none}
+.papel li{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px 0 10px;border-radius:999px;background:rgba(246,243,238,.06);
+  box-shadow:inset 0 0 0 1px rgba(246,243,238,.08);font:600 .8rem/1 var(--sans);color:var(--tx)}
+.papel li .ico{width:15px;height:15px;color:var(--lar-2)}
+.bio{margin:16px 0 0;font:400 1.18rem/1.42 var(--sans);letter-spacing:-.01em;color:var(--mut);max-width:30ch}
+.bio em{color:var(--tx);font-size:1.12em}
 .bio .w{display:inline-block}
 .numeros{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:10px;margin:20px 0 0;padding:0;list-style:none}
 .numeros li{display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;background:var(--s1);border:1px solid var(--line)}
@@ -165,21 +168,23 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 
 /* atalhos (compactos) */
 .atalhos{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin-top:10px}
-.at{display:flex;align-items:center;gap:12px;padding:8px 10px 8px 8px;border-radius:18px;background:var(--s1);border:1px solid var(--line);transition:background-color .25s, border-color .25s, transform .2s var(--e-q)}
+.at{display:flex;align-items:center;gap:12px;padding:10px 10px 10px 10px;border-radius:20px;background:linear-gradient(180deg, #17171A, #121214);
+  box-shadow:inset 0 0 0 1px rgba(246,243,238,.08), 0 10px 24px -18px rgba(0,0,0,.9);transition:box-shadow .25s, transform .2s var(--e-q)}
 .at:active{transform:scale(.98)}
-@media (hover:hover){.at:hover{background:var(--s2);border-color:rgba(246,243,238,.18)}.at:hover .seta-c{background:var(--lar);color:var(--bg)}}
-.at .tile{position:relative;display:grid;place-items:center;width:42px;height:42px;border-radius:12px;flex:none;overflow:hidden;background:var(--s2)}
-.at .tile .ico{width:19px;height:19px}
+@media (hover:hover){.at:hover{box-shadow:inset 0 0 0 1px rgba(255,90,31,.5), 0 14px 30px -18px rgba(0,0,0,.9)}.at:hover .seta-c{background:var(--lar);color:var(--bg)}}
+.at .tile{position:relative;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;flex:none;overflow:hidden;background:var(--s2)}
+.at .tile .ico{width:20px;height:20px}
 .at .tile img{width:100%;height:100%;object-fit:cover}
-.at .tile.lar{background:var(--lar);color:var(--bg)}
-.at .tile.creme{background:var(--creme);color:var(--bg)}
+.at .tile.duo{width:62px}
+.at .tile.lar{background:linear-gradient(140deg, #FF7A45, #F04A10);color:var(--bg)}
+.at .tile.creme{background:linear-gradient(140deg, #FFFFFF, #F3E6DA);color:var(--bg)}
 .at .txt{flex:1;min-width:0}
 .at b{display:block;font:700 .94rem/1.2 var(--sans);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .at small{display:block;margin-top:2px;font:400 .78rem/1.25 var(--sans);color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .seta-c{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--s3);color:var(--tx);flex:none;transition:background-color .25s, color .25s}
 .seta-c .ico{width:15px;height:15px}
 .faltam{flex:none;padding:6px 9px;border-radius:999px;background:rgba(255,90,31,.14);color:var(--lar-2);font:700 .72rem/1 var(--sans);white-space:nowrap}
-.copiar{flex:none;height:32px;padding:0 12px;border-radius:999px;background:var(--s3);font:650 .76rem/1 var(--sans);transition:background-color .2s}
+.copiar{flex:none;height:34px;padding:0 13px;border-radius:999px;background:transparent;box-shadow:inset 0 0 0 1.5px rgba(246,243,238,.22);font:650 .76rem/1 var(--sans);transition:background-color .2s, box-shadow .2s}
 @media (hover:hover){.copiar:hover{background:var(--lar);color:var(--bg)}}
 .copiar.ok{background:#1F9D55;color:#fff}
 
@@ -240,8 +245,14 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 .show::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg, rgba(10,10,11,.55), rgba(10,10,11,.88) 55%, rgba(10,10,11,.96))}
 .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--lar);color:var(--bg);font:750 .76rem/1 var(--sans)}
 .pill i{width:7px;height:7px;border-radius:50%;background:var(--bg)}
-.show h3{margin:14px 0 0;font:900 clamp(2.8rem, 13vw, 3.8rem)/.88 var(--sans);letter-spacing:-.05em}
-.show .genero{margin:6px 0 0;font:400 1.3rem/1 var(--serif);font-style:italic;color:var(--lar-2)}
+.show-topo{display:flex;align-items:center;gap:14px}
+.data-b{display:flex;flex-direction:column;align-items:center;justify-content:center;width:76px;height:88px;flex:none;border-radius:20px;background:var(--lar);color:var(--bg);
+  box-shadow:0 14px 28px -14px rgba(255,90,31,.8)}
+.data-b small{font:800 .66rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase}
+.data-b b{font:900 2.4rem/.95 var(--sans);letter-spacing:-.04em;margin:3px 0 2px}
+.show-topo .pill{padding:6px 10px;font-size:.7rem}
+.show h3{margin:8px 0 0;font:900 clamp(2.2rem, 10.5vw, 3rem)/.9 var(--sans);letter-spacing:-.05em}
+.show .genero{margin:5px 0 0;font:400 1.15rem/1 var(--serif);font-style:italic;color:var(--lar-2)}
 .elenco{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:10px;margin:22px 0 0;padding:0;list-style:none}
 .ator{display:flex;align-items:center;gap:10px;padding:10px;border-radius:18px;background:rgba(246,243,238,.06);border:1px solid rgba(246,243,238,.08)}
 .ator .rosto{width:52px;height:52px;border-radius:14px;overflow:hidden;flex:none;background:var(--lar)}
@@ -308,46 +319,33 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 .ev-bt .ico{width:14px;height:14px}
 @media (max-width:420px){.ev-bt{width:40px;height:40px;padding:0;justify-content:center;font-size:0;gap:0}.ev-bt .ico{width:17px;height:17px}}
 
-/* chamada final: a foto mora dentro do cartão */
-.final{position:relative;margin-top:76px;container-type:inline-size}
-.final-card{position:relative;display:grid;grid-template-columns:minmax(0,1fr);border-radius:32px;background:var(--lar);color:var(--bg);overflow:hidden;isolation:isolate}
-.final-card::before{content:"";position:absolute;inset:0;z-index:-1;
-  background:radial-gradient(70% 45% at 50% 100%, rgba(255,214,190,.55), rgba(255,214,190,0) 70%), radial-gradient(90% 60% at 0% 0%, rgba(150,30,0,.3), rgba(150,30,0,0) 70%)}
-.final-txt{padding:30px 22px 0}
-.final h2{margin:0;font:900 clamp(2.3rem, 11cqi, 3.6rem)/.94 var(--sans);letter-spacing:-.045em}
-.final h2 em{font-size:1.07em}
-.final p{margin:12px 0 0;max-width:34ch;font:500 1rem/1.4 var(--sans);color:rgba(10,10,11,.78)}
-.final .acoes{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin-top:20px}
-.final .acoes .btn{width:100%;white-space:nowrap}
+/* chamada final: uma conversa com o Nilson (como um direct) */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:54px;padding:0 22px;border-radius:999px;background:var(--bg);color:var(--creme);font:750 .98rem/1 var(--sans);
-  transition:background-color .2s, transform .16s var(--e-q)}
+  white-space:nowrap;transition:background-color .2s, transform .16s var(--e-q)}
 .btn:active{transform:scale(.97)}
 .btn .ico{width:18px;height:18px}
-@media (hover:hover){.btn:hover{background:#000}}
-.btn.linha{background:rgba(10,10,11,.08);color:var(--bg);box-shadow:inset 0 0 0 1.5px rgba(10,10,11,.5)}
-@media (hover:hover){.btn.linha:hover{background:rgba(10,10,11,.16)}}
-.link-mail{display:inline-flex;align-items:center;gap:6px;padding:10px 2px;font:650 .92rem/1 var(--sans);color:var(--bg);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1.5px}
-.final-foto{position:relative;justify-self:center;width:min(76%, 300px);margin-top:18px}
-.final-foto img{width:100%;aspect-ratio:1}
-.balao{position:absolute;left:60%;top:17%;z-index:2;max-width:46%;padding:10px 13px;border-radius:18px 18px 18px 4px;background:#fff;color:var(--bg);
-  font:700 .84rem/1.2 var(--sans);box-shadow:0 14px 28px -12px rgba(0,0,0,.6);transform-origin:0 100%}
-.balao::before{content:"";position:absolute;left:-7px;bottom:0;width:14px;height:14px;background:#fff;clip-path:polygon(100% 0, 100% 100%, 0 100%)}
-.balao .txt-b{display:inline}
-.balao .txt-b::after{content:"";display:inline-block;width:2px;height:1em;margin-left:2px;vertical-align:-2px;background:var(--lar);animation:pisca 1s steps(1) infinite}
-.balao.pronto .txt-b::after{display:none}
-@keyframes pisca{50%{opacity:0}}
-.digitando{display:none;gap:4px;align-items:center;height:1.2em}
-.balao.esperando .digitando{display:inline-flex}
-.balao.esperando .txt-b{display:none}
-.digitando i{width:6px;height:6px;border-radius:50%;background:#8a8a90;opacity:.4;animation:ponto 1s ease-in-out infinite}
-.digitando i:nth-child(2){animation-delay:.15s}.digitando i:nth-child(3){animation-delay:.3s}
+.chat{margin-top:22px;border-radius:30px;background:linear-gradient(180deg, #17171A, #111113);box-shadow:inset 0 0 0 1px rgba(246,243,238,.08), 0 30px 60px -36px rgba(255,90,31,.45);overflow:hidden}
+.chat-topo{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.chat-av{position:relative;width:46px;height:46px;flex:none}
+.chat-av img{width:46px;height:46px;border-radius:50%;object-fit:cover;object-position:50% 14%;background:var(--lar)}
+.chat-av i{position:absolute;right:0;bottom:1px;width:12px;height:12px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 2.5px #17171A}
+.chat-topo b{display:block;font:700 1rem/1.2 var(--sans)}
+.chat-topo small{display:block;margin-top:2px;font:500 .78rem/1.2 var(--sans);color:#4ADE80}
+.chat-topo .ico{margin-left:auto;color:var(--dim)}
+.chat-corpo{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:18px 16px 6px;min-height:196px}
+.msg{max-width:86%;margin:0;padding:11px 14px;border-radius:20px 20px 20px 6px;background:var(--s3);font:500 .98rem/1.38 var(--sans);transform-origin:0 100%}
+.msg.forte{background:var(--lar);color:var(--bg);font-weight:750}
+.digit{display:none;align-items:center;gap:4px;height:40px;padding:0 16px;border-radius:20px 20px 20px 6px;background:var(--s3)}
+.digit.on{display:inline-flex}
+.digit i{width:7px;height:7px;border-radius:50%;background:var(--mut);animation:ponto 1s ease-in-out infinite}
+.digit i:nth-child(2){animation-delay:.15s}.digit i:nth-child(3){animation-delay:.3s}
 @keyframes ponto{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
-@container (min-width:600px){
-  .final-card{grid-template-columns:1.15fr .85fr;align-items:end}
-  .final-txt{padding:40px 0 40px 36px;align-self:center}
-  .final-foto{width:100%;margin:0}
-  .balao{left:58%;top:15%}
-}
+.chat-acoes{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:14px 16px 16px}
+.chat .btn{width:100%;background:var(--lar);color:var(--bg)}
+.chat .btn.linha{background:transparent;color:var(--tx);box-shadow:inset 0 0 0 1.5px rgba(246,243,238,.22)}
+@media (hover:hover){.chat .btn:hover{background:var(--lar-2)}.chat .btn.linha:hover{background:rgba(246,243,238,.06)}}
+.js .chat .msg:not(.vis){display:none}
+.js .chat-acoes .btn{opacity:0}
 
 /* rodapé enxuto */
 .rodape{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:64px;padding-top:26px;border-top:1px solid var(--line)}
@@ -397,9 +395,9 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
   body{display:grid;grid-template-columns:minmax(0, 46vw) minmax(0,1fr)}
   .palco-hero{position:sticky;top:0;height:100vh;border-radius:0 32px 32px 0;--fw:min(100cqi, 92vh, 820px)}
   .muro{font-size:min(31cqi, 21vh)}
-  .voa.a{left:7%;top:16%}
-  .voa.b{right:7%;top:46%}
-  .cartao{width:clamp(120px, 24cqi, 196px)}
+  .voa.a{left:4%;top:11%}
+  .voa.b{right:4%;top:45%}
+  .cartao{width:clamp(130px, 25cqi, 212px)}
   .conteudo{padding:56px clamp(32px, 5vw, 80px) 40px;max-width:720px}
   .perfil{padding-top:0}
   .nome{font-size:clamp(3rem, 4.6vw, 4.4rem)}
@@ -430,6 +428,8 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
     <symbol id="i-sofa" viewBox="0 0 24 24"><path d="M5 11V8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3M3 13a2 2 0 0 1 4 0v2h10v-2a2 2 0 0 1 4 0v5H3zM5 18v2M19 18v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
     <symbol id="i-carne" viewBox="0 0 24 24"><path d="M15.5 3.5c3 0 5 2.4 5 5.3 0 4.6-5.8 9.7-10.8 9.7a4.4 4.4 0 0 1-4.2-4.4c0-3.6 3-5 4.6-7.2 1.4-1.9 2.8-3.4 5.4-3.4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6.5 17.5 3.5 20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="14.5" cy="9.5" r="1.8" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
     <symbol id="i-mic" viewBox="0 0 24 24"><rect x="8.5" y="3" width="7" height="11" rx="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-sorriso" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 14c1 1.6 2.4 2.4 4 2.4s3-.8 4-2.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="9.5" r="1.2" fill="currentColor"/><circle cx="15" cy="9.5" r="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24"><rect x="2.5" y="6" width="13" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15.5 10.5 6-3.5v10l-6-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"/></symbol>
     <symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m16 9.5 5 5m0-5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
     <symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M16 9a4.2 4.2 0 0 1 0 6M18.6 6.4a8 8 0 0 1 0 11.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
@@ -450,18 +450,18 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
   </div>
   <div class="foto" id="foto"><img src="img/nilson.webp" alt="Nilson Anesclar, humorista" width="900" height="900" fetchpriority="high"></div>
   <div class="voa a" data-fase="0"><div class="entra"><span class="cartao">
-    <img src="img/clip-publi.jpg" alt="" width="270" height="480"><video src="img/clip-publi.mp4" muted playsinline loop autoplay preload="auto"></video>
+    <img src="img/clip-publi.jpg" alt="" width="300" height="534"><video src="img/clip-publi.mp4" muted playsinline loop autoplay preload="auto"></video>
     <span class="rot"><i></i>Publis</span><span class="prog"><i></i></span></span></div></div>
   <div class="voa b" data-fase="2.1"><div class="entra"><span class="cartao">
-    <img src="img/clip-standup.jpg" alt="" width="270" height="480"><video src="img/clip-standup.mp4" muted playsinline loop autoplay preload="auto"></video>
-    <span class="rot"><i></i>Stand up</span><span class="prog"><i></i></span></span></div></div>
+    <img src="img/clip-itinerante.jpg" alt="" width="300" height="534"><video src="img/clip-itinerante.mp4" muted playsinline loop autoplay preload="auto"></video>
+    <span class="rot"><i></i>Humor Itinerante</span><span class="prog"><i></i></span></span></div></div>
 </header>
 
 <main class="conteudo">
   <section class="perfil" aria-label="Sobre">
     <h1 class="nome" aria-label="Nilson Anesclar"><span class="ln" aria-hidden="true"><span class="lt">Nilson</span></span> <span class="ln" aria-hidden="true"><span class="lt">Anesclar</span></span></h1>
-    <ul class="papel"><li>Humorista</li><li>Stand up</li><li>Publis para empresas</li></ul>
-    <p class="bio" id="bio">Faço <em>publis que o povo assiste até o fim</em> e stand up comedy em Petrópolis e região.</p>
+    <ul class="papel"><li><svg class="ico"><use href="#i-sorriso"/></svg>Humorista</li><li><svg class="ico"><use href="#i-mic"/></svg>Stand up</li><li><svg class="ico"><use href="#i-cam"/></svg>Publis</li></ul>
+    <p class="bio" id="bio"><em>Publis que o povo assiste até o fim</em> e stand up comedy em Petrópolis e região.</p>
     <ul class="numeros">
       <li><span class="ico-n"><svg class="ico"><use href="#i-pessoas"/></svg></span><span><strong><span id="cont">138</span> mil</strong><small>seguidores no Instagram</small></span></li>
       <li><span class="ico-n"><svg class="ico"><use href="#i-olho"/></svg></span><span><strong>+<span id="contViews">7,6</span> mi</strong><small>views nos últimos 2 meses</small></span></li>
@@ -469,7 +469,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
   </section>
 
   <a class="cta" data-contato="publi" href="https://ig.me/m/nilson_anesclarjr" target="_blank" rel="noopener">
-    <span class="cta-topo"><span class="cta-logos" aria-hidden="true"><img src="img/logos/hyundai.webp" alt="" width="240" height="240"><img src="img/logos/megabeef.webp" alt="" width="240" height="240"><img src="img/logos/viverbem.webp" alt="" width="240" height="240"><img src="img/logos/finafauna.webp" alt="" width="240" height="240"><img src="img/logos/eletromoveis.webp" alt="" width="240" height="240"><img src="img/logos/lutti.webp" alt="" width="240" height="240"><img src="img/logos/antenor.webp" alt="" width="240" height="240"><img src="img/logos/nilmar.webp" alt="" width="240" height="240"><img src="img/logos/surikata.webp" alt="" width="240" height="240"><img src="img/logos/serralink.webp" alt="" width="240" height="240"><img src="img/logos/joha.webp" alt="" width="240" height="240"></span><span class="cta-prova"><b>11 marcas</b> da região já anunciaram</span></span>
+    <span class="cta-topo"><span class="cta-logos" aria-hidden="true"><img src="img/logos/hyundai.webp" alt="" width="240" height="240"><img src="img/logos/megabeef.webp" alt="" width="240" height="240"><img src="img/logos/viverbem.webp" alt="" width="240" height="240"><img src="img/logos/finafauna.webp" alt="" width="240" height="240"><img src="img/logos/eletromoveis.webp" alt="" width="240" height="240"><img src="img/logos/lutti.webp" alt="" width="240" height="240"><img src="img/logos/antenor.webp" alt="" width="240" height="240"><img src="img/logos/nilmar.webp" alt="" width="240" height="240"><img src="img/logos/surikata.webp" alt="" width="240" height="240"><img src="img/logos/serralink.webp" alt="" width="240" height="240"><img src="img/logos/joha.webp" alt="" width="240" height="240"></span><span class="cta-prova">Marcas que já <b>riram junto</b></span></span>
     <b class="cta-titulo">Coloque sua marca num vídeo do Nilson</b>
     <span class="cta-sub"><svg class="ico"><use href="#i-olho"/></svg>+7 milhões de views nos últimos 2 meses</span>
     <span class="cta-botao"><svg class="ico"><use href="#i-dm"/></svg><span>Quero uma publi</span><span class="cta-seta"><svg><use href="#i-seta"/></svg></span></span>
@@ -501,7 +501,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 
   <div class="atalhos">
     <a class="at" href="#palco" data-ate="2026-12-06T03:00:00Z">
-      <span class="tile"><img src="img/entra-e-sai.jpg" alt="" width="720" height="900"></span>
+      <span class="tile duo"><img src="img/show-rostos.jpg" alt="" width="232" height="176"></span>
       <span class="txt"><b>Show Entra e Sai</b><small>Sábado, 5/12 · 20h30 · Itaipava</small></span>
       <span class="faltam" id="faltam">dezembro</span></a>
     <a class="at" data-contato="show" href="https://ig.me/m/nilson_anesclarjr" target="_blank" rel="noopener">
@@ -517,7 +517,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 
   <section class="secao" aria-labelledby="t-marcas">
     <h2 class="titulo" id="t-marcas"><span class="w"><span>Marcas</span></span> <span class="w"><span>que</span></span> <span class="w"><span>já</span></span> <span class="w"><span><em>riram junto</em></span></span></h2>
-    <p class="sub">11 marcas da região. Toque numa logo para assistir à publi.</p>
+    <p class="sub">Toque numa logo para assistir à publi.</p>
     <ul class="grade-marcas" id="gradeMarcas"></ul>
   </section>
 
@@ -543,9 +543,10 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
     <h2 class="titulo" id="t-palco"><span class="w"><span>Também</span></span> <span class="w"><span><em>no palco</em></span></span></h2>
     <article class="show" data-ate="2026-12-06T03:00:00Z" data-inicio="2026-12-05T23:30:00Z">
       <img class="fundo" src="img/entra-e-sai.jpg" alt="" width="720" height="900" loading="lazy">
-      <span class="pill"><i></i>Próximo show</span>
-      <h3>Entra e Sai</h3>
-      <p class="genero">Stand up comedy</p>
+      <div class="show-topo">
+        <div class="data-b" aria-label="Sábado, 5 de dezembro"><small>Dez</small><b>05</b><small>Sáb</small></div>
+        <div><span class="pill"><i></i>Próximo show</span><h3>Entra e Sai</h3><p class="genero">Stand up comedy · 20h30</p></div>
+      </div>
       <ul class="elenco" id="elenco">
         <li class="ator"><span class="rosto"><img src="img/nilson.webp" alt="" width="900" height="900" loading="lazy"></span><span><b>Nilson Anesclar</b><small>Humorista</small></span></li>
         <li class="ator"><span class="rosto"><img src="img/rodolffo.webp" alt="" width="480" height="480" loading="lazy"></span><span><b>Rodolffo Moraes</b><small>Ator e comediante</small></span></li>
@@ -586,17 +587,24 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
     </a>
   </section>
 
-  <section class="final" id="final" aria-labelledby="t-final">
-    <div class="final-card">
-      <div class="final-txt">
-        <h2 id="t-final">Sua marca no próximo <em>vídeo do Nilson.</em></h2>
-        <p>Foram mais de 7 milhões de views nos últimos 2 meses. A próxima publi pode ser a da sua marca.</p>
-        <div class="acoes">
-          <a class="btn" data-contato="publi" href="https://ig.me/m/nilson_anesclarjr" target="_blank" rel="noopener"><svg class="ico"><use href="#i-dm"/></svg>Pedir orçamento</a>
-          <a class="btn linha" href="mailto:sanproducoesartisticas@gmail.com?subject=Quero%20uma%20publi%20com%20o%20Nilson" aria-label="Mandar e-mail"><svg class="ico"><use href="#i-mail"/></svg>E-mail</a>
-        </div>
+  <section class="secao final" id="final" aria-labelledby="t-final">
+    <h2 class="titulo" id="t-final"><span class="w"><span>Sua</span></span> <span class="w"><span>marca</span></span> <span class="w"><span>no</span></span> <span class="w"><span>próximo</span></span> <span class="w"><span><em>vídeo</em></span></span></h2>
+    <div class="chat" id="chat">
+      <div class="chat-topo">
+        <span class="chat-av"><img src="img/nilson.webp" alt="" width="900" height="900" loading="lazy"><i></i></span>
+        <span><b>Nilson Anesclar</b><small>online agora</small></span>
+        <svg class="ico"><use href="#i-ig"/></svg>
       </div>
-      <div class="final-foto" id="finalFoto" aria-hidden="true"><img src="img/nilson.webp" alt="" width="900" height="900" loading="lazy"><span class="balao esperando" id="balao"><span class="digitando"><i></i><i></i><i></i></span><span class="txt-b" id="balaoTxt"></span></span></div>
+      <div class="chat-corpo" id="chatCorpo" aria-live="polite">
+        <p class="msg">Fala! Aqui é o Nilson.</p>
+        <p class="msg">Foram mais de 7 milhões de views nos últimos 2 meses.</p>
+        <p class="msg forte">Bora colocar a sua marca no próximo vídeo?</p>
+        <span class="digit" id="digit" aria-hidden="true"><i></i><i></i><i></i></span>
+      </div>
+      <div class="chat-acoes">
+        <a class="btn" data-contato="publi" href="https://ig.me/m/nilson_anesclarjr" target="_blank" rel="noopener"><svg class="ico"><use href="#i-dm"/></svg>Quero uma publi</a>
+        <a class="btn linha" href="mailto:sanproducoesartisticas@gmail.com?subject=Quero%20uma%20publi%20com%20o%20Nilson"><svg class="ico"><use href="#i-mail"/></svg>Mandar e-mail</a>
+      </div>
     </div>
   </section>
 

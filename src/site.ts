@@ -471,9 +471,7 @@ class Feed {
 
   private montar(el: HTMLButtonElement, v: Video): void {
     el.setAttribute('aria-label', 'Assistir: ' + v.gancho + ' · ' + v.marca + ' · ' + v.views + ' de views');
-    const quem = v.logo
-      ? '<img src="' + esc(v.logo) + '" alt="" width="240" height="240">'
-      : '<span class="nicho-ico"><svg><use href="#' + esc(v.ico) + '"/></svg></span>';
+    const quem = v.logo ? '<img src="' + esc(v.logo) + '" alt="" width="240" height="240">' : '';
     el.innerHTML =
       '<img class="cap" src="' + esc(v.poster) + '" alt="" width="540" height="960" loading="lazy">' +
       '<video muted playsinline loop preload="none" src="' + esc(v.video) + '"></video>' +
@@ -569,42 +567,26 @@ if (serie) {
 
 /* ---------------------------------------------------------------- chamada final */
 
-const final = talvez('#final');
-if (final) {
-  const balao = $('#balao');
-  const txt = $('#balaoTxt');
-  const frases = ['Bora vender rindo?', 'Sua marca aqui, ó!', 'Chama no direct!'];
-  let iFrase = 0;
-  let rodando = false;
+const chat = talvez('#chat');
+if (chat) {
+  // a conversa acontece uma vez: "digitando…", a mensagem chega, a próxima; no fim os botões aparecem
+  const msgs = $$('.msg', chat);
+  const digit = $('#digit');
   const espera = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
-  async function fala(): Promise<void> {
-    if (rodando) return;
-    rodando = true;
-    while (!final!.classList.contains('parado')) {
-      balao.classList.add('esperando');
-      balao.classList.remove('pronto');
-      txt.textContent = '';
-      await espera(1100);
-      balao.classList.remove('esperando');
-      const frase = frases[iFrase];
-      for (let n = 1; n <= frase.length; n++) {
-        txt.textContent = frase.slice(0, n);
-        await espera(frase[n - 1] === ' ' ? 30 : 55);
+  umaVez(chat, () => {
+    void (async () => {
+      for (const m of msgs) {
+        m.before(digit);
+        digit.classList.add('on');
+        await espera(m.classList.contains('forte') ? 1100 : 850);
+        digit.classList.remove('on');
+        m.classList.add('vis');
+        anima(m, chega('translateY(10px) scale(.85)', 'translateY(0) scale(1)'), { duracao: 520, curva: 'mola' });
+        await espera(380);
       }
-      balao.classList.add('pronto');
-      await espera(3200);
-      iFrase = (iFrase + 1) % frases.length;
-    }
-    rodando = false;
-  }
-  umaVez(final, () => {
-    anima($('#finalFoto img'), chega('translateY(' + 26 * K + '%)', 'translateY(0)'), { duracao: 1200, atraso: 150, curva: 'expo' });
-    anima(balao, chega('scale(.3) rotate(-14deg)', 'scale(1) rotate(0deg)'), { duracao: 640, atraso: 900, curva: 'mola' });
-    setTimeout(() => void fala(), 900);
-  }, { threshold: 0.3 });
-  aoVer(final, (v) => {
-    if (v && balao.getAnimations().length) setTimeout(() => void fala(), 300);
-  });
+      cascata($$('.chat-acoes .btn', chat), 100, 110, (b, t) => anima(b, chega('translateY(14px)', 'translateY(0)'), { duracao: 620, atraso: t, curva: 'expo' }));
+    })();
+  }, { threshold: 0.35 });
 }
 
 /* ---------------------------------------------------------------- botão flutuante (celular) */
