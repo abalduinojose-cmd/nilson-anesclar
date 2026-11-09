@@ -75,8 +75,9 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 .foto{position:absolute;left:50%;bottom:0;width:var(--fw);margin-left:calc(var(--fw) / -2);z-index:2}
 .foto img{width:100%;aspect-ratio:1}
 .voa{position:absolute;z-index:3;will-change:transform}
-.voa.a{left:-1%;top:12%}
-.voa.b{right:-1%;top:41%}
+.voa.a{left:-5%;top:6%}
+.voa.b{right:-2%;top:53%}
+.voa.a .rot{left:auto;right:8px}
 .cartao{position:relative;display:block;width:clamp(112px, 32cqi, 204px);aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;
   box-shadow:0 0 0 1.5px rgba(255,244,236,.7), 0 30px 50px -18px rgba(70,12,0,.7)}
 .cartao video,.cartao img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -174,7 +175,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 @media (hover:hover){.at:hover{box-shadow:inset 0 0 0 1px rgba(255,90,31,.5), 0 14px 30px -18px rgba(0,0,0,.9)}.at:hover .seta-c{background:var(--lar);color:var(--bg)}}
 .at .tile{position:relative;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;flex:none;overflow:hidden;background:var(--s2)}
 .at .tile .ico{width:20px;height:20px}
-.at .tile img{width:100%;height:100%;object-fit:cover}
+.at .tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .at .tile.duo{width:62px}
 .at .tile.lar{background:linear-gradient(140deg, #FF7A45, #F04A10);color:var(--bg)}
 .at .tile.creme{background:linear-gradient(140deg, #FFFFFF, #F3E6DA);color:var(--bg)}
@@ -395,8 +396,8 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
   body{display:grid;grid-template-columns:minmax(0, 46vw) minmax(0,1fr)}
   .palco-hero{position:sticky;top:0;height:100vh;border-radius:0 32px 32px 0;--fw:min(100cqi, 92vh, 820px)}
   .muro{font-size:min(31cqi, 21vh)}
-  .voa.a{left:4%;top:11%}
-  .voa.b{right:4%;top:45%}
+  .voa.a{left:2%;top:7%}
+  .voa.b{right:2%;top:54%}
   .cartao{width:clamp(130px, 25cqi, 212px)}
   .conteudo{padding:56px clamp(32px, 5vw, 80px) 40px;max-width:720px}
   .perfil{padding-top:0}
