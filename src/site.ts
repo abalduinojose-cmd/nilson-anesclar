@@ -295,7 +295,7 @@ function abertura(): void {
   ], { duracao: 620, atraso: t, curva: 'p4' }), 0.97);
   cascata($$('.numeros li'), 1000, 90, (li, t) => anima(li, chega('translateY(' + 18 * K + 'px)', 'translateY(0)'), { duracao: 640, atraso: t, curva: 'p4' }));
   contaAte($('#cont'), 138, 0, 1300, 1050);
-  contaAte($('#contViews'), 6.7, 1, 1400, 1150);
+  contaAte($('#contViews'), 7.6, 1, 1400, 1150);
 
   anima($('.cta'), chega('translateY(' + 30 * K + 'px) scale(.95)', 'translateY(0) scale(1)'), { duracao: 820, atraso: 1150, curva: 'expo' });
   cascata($$('.cta-logos img'), 1450, 70, (img, t) => anima(img, chega('translateX(-10px) scale(.4)', 'translateX(0) scale(1)'), { duracao: 520, atraso: t, curva: 'mola' }));
@@ -466,7 +466,7 @@ class Feed {
       else lista.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
     const placar = talvez('#placar');
-    if (placar) umaVez(placar, () => contaAte(placar, 6.7, 1, 1600, 100));
+    if (placar) umaVez(placar, () => contaAte(placar, 7.6, 1, 1600, 100));
   }
 
   private montar(el: HTMLButtonElement, v: Video): void {
@@ -478,7 +478,6 @@ class Feed {
       '<img class="cap" src="' + esc(v.poster) + '" alt="" width="540" height="960" loading="lazy">' +
       '<video muted playsinline loop preload="none" src="' + esc(v.video) + '"></video>' +
       '<span class="views"><svg><use href="#i-play"/></svg>' + esc(v.views) + '</span>' +
-      (v.top ? '<span class="top">TOP ' + esc(v.top) + '</span>' : '') +
       '<span class="post-base"><q>' + esc(v.gancho) + '</q><span class="quem">' + quem + '<small>' + esc(v.marca) + '</small></span></span>';
     el.addEventListener('click', () => player.abrir(v, this.dados));
   }
