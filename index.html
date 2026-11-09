@@ -72,23 +72,10 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 .fila.cheia{color:var(--creme)}
 .fila.contorno{color:transparent;-webkit-text-stroke:2px rgba(255,244,236,.72)}
 .fila.tom{color:#E5420B}
-.fila.mini{font-size:.3em;letter-spacing:-.01em;color:var(--bg);padding-block:.3em .45em}
-.fila.mini .rola>span{display:inline-flex;align-items:center;gap:.5em;padding-right:.5em}
-.fila.mini .rola>span::after{content:"";width:.32em;height:.32em;border-radius:50%;background:var(--creme)}
+.fila.video{position:relative;height:.84em}
+.fila.video canvas{display:block;width:100%;height:100%}
 .foto{position:absolute;left:50%;bottom:0;width:var(--fw);margin-left:calc(var(--fw) / -2);z-index:2}
 .foto img{width:100%;aspect-ratio:1}
-.voa{position:absolute;z-index:3;will-change:transform}
-.voa.a{left:4%;top:17%}
-.voa.b{right:4%;top:43%}
-.cartao{position:relative;display:block;width:clamp(100px, 30cqi, 176px);aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;
-  box-shadow:0 0 0 1.5px rgba(255,244,236,.7), 0 30px 50px -18px rgba(70,12,0,.7)}
-.cartao video,.cartao img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.cartao::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,11,.45), rgba(10,10,11,0) 30%);pointer-events:none}
-.cartao .rot{position:absolute;left:8px;top:8px;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;
-  background:rgba(10,10,11,.55);color:var(--creme);font:700 clamp(.64rem, 2.8cqi, .78rem)/1 var(--sans);white-space:nowrap;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.cartao .rot i{width:7px;height:7px;border-radius:50%;background:var(--yt);animation:aovivo 1.6s ease-out infinite}
-.cartao .prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.25);z-index:2}
-.cartao .prog i{display:block;height:100%;background:var(--lar);transform-origin:0 50%;transform:scaleX(0)}
 
 /* ================= conteúdo ================= */
 .conteudo{padding:0 var(--pad) calc(26px + var(--safe-b))}
@@ -304,13 +291,24 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 .link-mail{display:inline-flex;align-items:center;gap:6px;padding:10px 2px;font:650 .92rem/1 var(--sans);color:var(--bg);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1.5px}
 .final-foto{position:relative;justify-self:center;width:min(76%, 300px);margin-top:18px}
 .final-foto img{width:100%;aspect-ratio:1}
-.balao{position:absolute;right:-8%;top:14%;padding:9px 13px;border-radius:16px 16px 16px 4px;background:var(--bg);color:var(--creme);font:700 .82rem/1.2 var(--sans);rotate:4deg;
-  box-shadow:0 14px 28px -12px rgba(0,0,0,.6);white-space:nowrap}
+.balao{position:absolute;left:60%;top:17%;z-index:2;max-width:46%;padding:10px 13px;border-radius:18px 18px 18px 4px;background:var(--bg);color:var(--creme);
+  font:700 .84rem/1.2 var(--sans);box-shadow:0 14px 28px -12px rgba(0,0,0,.6);transform-origin:0 100%}
+.balao::before{content:"";position:absolute;left:-7px;bottom:0;width:14px;height:14px;background:var(--bg);clip-path:polygon(100% 0, 100% 100%, 0 100%)}
+.balao .txt-b{display:inline}
+.balao .txt-b::after{content:"";display:inline-block;width:2px;height:1em;margin-left:2px;vertical-align:-2px;background:var(--lar);animation:pisca 1s steps(1) infinite}
+.balao.pronto .txt-b::after{display:none}
+@keyframes pisca{50%{opacity:0}}
+.digitando{display:none;gap:4px;align-items:center;height:1.2em}
+.balao.esperando .digitando{display:inline-flex}
+.balao.esperando .txt-b{display:none}
+.digitando i{width:6px;height:6px;border-radius:50%;background:var(--creme);opacity:.4;animation:ponto 1s ease-in-out infinite}
+.digitando i:nth-child(2){animation-delay:.15s}.digitando i:nth-child(3){animation-delay:.3s}
+@keyframes ponto{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
 @container (min-width:600px){
   .final-card{grid-template-columns:1.15fr .85fr;align-items:end}
   .final-txt{padding:40px 0 40px 36px;align-self:center}
   .final-foto{width:100%;margin:0}
-  .balao{right:auto;left:-6%;top:10%;border-radius:16px 16px 4px 16px}
+  .balao{left:58%;top:15%}
 }
 
 /* rodapé enxuto */
@@ -323,19 +321,12 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 @media (hover:hover){.rod-redes a:hover{color:var(--tx);background:var(--s2)}}
 .rod-copy{flex-basis:100%;margin:6px 0 0;font:400 .78rem/1.5 var(--sans);color:var(--dim)}
 
-/* botão flutuante (celular) */
-.flutuante{position:fixed;left:50%;bottom:calc(14px + var(--safe-b));z-index:40;display:flex;align-items:center;gap:12px;width:min(calc(100% - 28px), 420px);padding:7px 7px 7px 8px;border-radius:999px;
-  background:rgba(20,20,22,.86);border:1px solid rgba(246,243,238,.12);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 18px 40px -16px rgba(0,0,0,.8);
-  transform:translate(-50%, calc(100% + 40px));transition:transform .55s var(--e-out)}
-.flutuante.on{transform:translate(-50%, 0)}
-.flutuante .av{position:relative;width:44px;height:44px;border-radius:50%;background:var(--lar);overflow:hidden;flex:none}
-.flutuante .av img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;scale:1.25;translate:0 6%}
-.flutuante .online{position:absolute;left:39px;top:6px;width:11px;height:11px;border-radius:50%;background:#22C55E;border:2px solid #141416}
-.flutuante span.t{flex:1;min-width:0}
-.flutuante b{display:block;font:750 .95rem/1.15 var(--sans)}
-.flutuante small{display:block;font:400 .76rem/1.2 var(--sans);color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.flutuante .ir{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--lar);color:var(--bg);flex:none}
-.flutuante .ir .ico{width:19px;height:19px}
+/* botão flutuante (celular): só o essencial */
+.flutuante{position:fixed;right:14px;bottom:calc(14px + var(--safe-b));z-index:40;display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 20px 0 16px;border-radius:999px;
+  background:var(--lar);color:var(--bg);font:750 .95rem/1 var(--sans);box-shadow:0 16px 34px -12px rgba(255,90,31,.75), 0 0 0 1px rgba(255,255,255,.12) inset;
+  transform:translateY(calc(100% + 40px));transition:transform .55s var(--e-out)}
+.flutuante.on{transform:none}
+.flutuante .ico{width:19px;height:19px}
 
 /* player em tela cheia */
 .lb{width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:transparent;color:var(--tx)}
@@ -359,7 +350,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 @media (hover:hover){.lb-base a:hover{color:var(--tx)}}
 
 /* estados iniciais (só com JS) */
-.js .fila-h,.js .entra,.js .foto,.js .papel li,.js .numeros li,.js .cta,.js .igc,.js .soc,.js .at,.js .gm{opacity:0}
+.js .fila-h,.js .foto,.js .papel li,.js .numeros li,.js .cta,.js .igc,.js .soc,.js .at,.js .gm{opacity:0}
 .js .nome .lt,.js .titulo .w>span{transform:translateY(105%)}
 .js .bio .w{opacity:0}
 
@@ -368,9 +359,6 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
   body{display:grid;grid-template-columns:minmax(0, 46vw) minmax(0,1fr)}
   .palco-hero{position:sticky;top:0;height:100vh;border-radius:0 32px 32px 0;--fw:min(100cqi, 92vh, 820px)}
   .muro{font-size:min(31cqi, 21vh)}
-  .voa.a{left:7%;top:16%}
-  .voa.b{right:7%;top:46%}
-  .cartao{width:clamp(120px, 24cqi, 196px)}
   .conteudo{padding:56px clamp(32px, 5vw, 80px) 40px;max-width:720px}
   .perfil{padding-top:0}
   .nome{font-size:clamp(3rem, 4.6vw, 4.4rem)}
@@ -414,18 +402,12 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 <header class="palco-hero" id="hero">
   <div class="muro" id="muro" aria-hidden="true">
     <div class="fila fila-h contorno"><div class="rola" style="--d:34s"><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span></div></div>
-    <div class="fila fila-h cheia rev"><div class="rola" style="--d:22s"><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span></div></div>
-    <div class="fila fila-h mini"><div class="rola" style="--d:16s"><span>Humorista</span><span>Stand up</span><span>Publis</span><span>Humorista</span><span>Stand up</span><span>Publis</span><span>Humorista</span><span>Stand up</span><span>Publis</span><span>Humorista</span><span>Stand up</span><span>Publis</span></div></div>
+    <div class="fila fila-h video"><canvas id="letras" aria-hidden="true"></canvas></div>
     <div class="fila fila-h tom rev"><div class="rola" style="--d:28s"><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span><span>Nilson</span></div></div>
     <div class="fila fila-h contorno"><div class="rola" style="--d:38s"><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span></div></div>
   </div>
   <div class="foto" id="foto"><img src="img/nilson.webp" alt="Nilson Anesclar, humorista" width="900" height="900" fetchpriority="high"></div>
-  <div class="voa a" data-fase="0"><div class="entra"><span class="cartao">
-    <img src="img/clip-publi.jpg" alt="" width="270" height="480"><video src="img/clip-publi.mp4" muted playsinline loop autoplay preload="auto"></video>
-    <span class="rot"><i></i>Publis</span><span class="prog"><i></i></span></span></div></div>
-  <div class="voa b" data-fase="2.1"><div class="entra"><span class="cartao">
-    <img src="img/clip-standup.jpg" alt="" width="270" height="480"><video src="img/clip-standup.mp4" muted playsinline loop autoplay preload="auto"></video>
-    <span class="rot"><i></i>Stand up</span><span class="prog"><i></i></span></span></div></div>
+  <video id="letrasVideo" src="img/letras.mp4" muted playsinline loop autoplay preload="auto" aria-hidden="true" style="position:absolute;width:2px;height:2px;opacity:0;pointer-events:none;left:0;top:0"></video>
 </header>
 
 <main class="conteudo">
@@ -563,7 +545,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
           <a class="link-mail" href="mailto:sanproducoesartisticas@gmail.com?subject=Quero%20uma%20publi%20com%20o%20Nilson">ou mande um e-mail</a>
         </div>
       </div>
-      <div class="final-foto" id="finalFoto" aria-hidden="true"><img src="img/nilson.webp" alt="" width="900" height="900" loading="lazy"><span class="balao" id="balao">Bora vender rindo?</span></div>
+      <div class="final-foto" id="finalFoto" aria-hidden="true"><img src="img/nilson.webp" alt="" width="900" height="900" loading="lazy"><span class="balao esperando" id="balao"><span class="digitando"><i></i><i></i><i></i></span><span class="txt-b" id="balaoTxt"></span></span></div>
     </div>
   </section>
 
@@ -578,11 +560,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
   </footer>
 </main>
 
-<a class="flutuante" id="flutuante" data-contato="publi" href="https://ig.me/m/nilson_anesclarjr" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
-  <span class="av"><img src="img/nilson.webp" alt="" width="900" height="900"></span><i class="online"></i>
-  <span class="t"><b>Quero uma publi</b><small>Fale direto com o Nilson</small></span>
-  <span class="ir"><svg class="ico"><use href="#i-dm"/></svg></span>
-</a>
+<a class="flutuante" id="flutuante" data-contato="publi" href="https://ig.me/m/nilson_anesclarjr" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><svg class="ico"><use href="#i-dm"/></svg>Quero uma publi</a>
 
 <dialog class="lb" id="lb" aria-label="Player de vídeo">
   <div class="lb-caixa">
