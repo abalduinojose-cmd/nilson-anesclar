@@ -79,13 +79,28 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 .voa.b{right:8px;top:59%}
 .cartao{position:relative;display:block;width:clamp(100px, 29cqi, 196px);aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;
   box-shadow:0 0 0 1.5px rgba(255,244,236,.7), 0 30px 50px -18px rgba(70,12,0,.7)}
-.cartao video,.cartao img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.cartao::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,11,.45), rgba(10,10,11,0) 30%);pointer-events:none}
-.cartao .rot{position:absolute;left:5px;right:5px;top:6px;overflow:hidden;z-index:2;display:flex;align-items:center;justify-content:center;gap:5px;padding:6px 4px;border-radius:999px;
-  background:rgba(10,10,11,.55);color:var(--creme);font:700 clamp(.64rem, 2.8cqi, .78rem)/1 var(--sans);white-space:nowrap;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.cartao .rot i{width:7px;height:7px;border-radius:50%;background:var(--yt);animation:aovivo 1.6s ease-out infinite}
-.cartao .prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.25);z-index:2}
-.cartao .prog i{display:block;height:100%;background:var(--lar);transform-origin:0 50%;transform:scaleX(0)}
+.cartao{container-type:inline-size}
+.cartao>video,.cartao>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cartao::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,0) 22%, rgba(0,0,0,0) 52%, rgba(0,0,0,.78) 100%)}
+.reel-topo,.reel-acoes,.reel-base{position:absolute;z-index:2;color:#fff;pointer-events:none}
+.reel-topo{left:7cqi;right:7cqi;top:6cqi;display:flex;align-items:center;justify-content:space-between;font:800 10cqi/1 var(--sans);letter-spacing:-.02em}
+.reel-topo svg{width:11cqi;height:11cqi}
+.reel-acoes{right:4cqi;bottom:30cqi;display:flex;flex-direction:column;align-items:center;gap:6cqi}
+.reel-acoes span{display:flex;flex-direction:column;align-items:center;gap:1.5cqi;font:700 5.6cqi/1 var(--sans);text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.reel-acoes svg{width:12.5cqi;height:12.5cqi;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.reel-acoes .curtir svg{color:#FF3040;animation:curtida 3.2s var(--e-q) infinite}
+@keyframes curtida{0%,70%,100%{transform:scale(1)}76%{transform:scale(1.35)}84%{transform:scale(.92)}90%{transform:scale(1.08)}}
+.reel-base{left:6cqi;right:22cqi;bottom:8cqi}
+.reel-user{display:flex;align-items:center;gap:3cqi;font:700 6.2cqi/1 var(--sans);white-space:nowrap}
+.reel-user img{width:12cqi;height:12cqi;border-radius:50%;object-fit:cover;object-position:50% 14%;background:var(--lar);box-shadow:0 0 0 1px rgba(255,255,255,.8)}
+.reel-user b{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.reel-user i{flex:none;padding:1.5cqi 3cqi;border-radius:2cqi;box-shadow:inset 0 0 0 1px rgba(255,255,255,.75);font:700 5.4cqi/1 var(--sans);font-style:normal}
+.reel-cap{display:block;margin-top:3.5cqi;font:500 6cqi/1.25 var(--sans);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.reel-audio{display:flex;align-items:center;gap:2cqi;margin-top:3cqi;font:500 5.4cqi/1 var(--sans);opacity:.9;white-space:nowrap}
+.reel-audio svg{width:6.5cqi;height:6.5cqi;flex:none}
+.cartao .prog{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.25);z-index:3}
+.cartao .prog i{display:block;height:100%;background:#fff;transform-origin:0 50%;transform:scaleX(0)}
 
 /* ================= conteúdo ================= */
 .conteudo{padding:0 var(--pad) calc(26px + var(--safe-b))}
@@ -239,9 +254,18 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 .mais[aria-expanded="true"] .ico{transform:rotate(180deg)}
 
 /* palco */
-.show{position:relative;margin-top:24px;padding:20px;border-radius:30px;overflow:hidden;isolation:isolate;border:1px solid var(--line)}
-.show .fundo{position:absolute;inset:-40px;z-index:-2;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(28px) saturate(1.3);opacity:.55}
-.show::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg, rgba(10,10,11,.55), rgba(10,10,11,.88) 55%, rgba(10,10,11,.96))}
+.show{position:relative;margin-top:24px;padding:20px;border-radius:30px;overflow:hidden;isolation:isolate;background:#0D0D10;box-shadow:inset 0 0 0 1px rgba(255,140,90,.18), 0 40px 80px -50px rgba(255,90,31,.55)}
+.show .fundo{position:absolute;inset:-40px;z-index:-3;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(40px) saturate(1.4) brightness(.7);opacity:.28}
+.show::before{content:"";position:absolute;inset:0;z-index:-2;
+  background:radial-gradient(55% 30% at 50% 0%, rgba(255,226,196,.26), rgba(255,226,196,0) 75%),
+             radial-gradient(80% 45% at 0% 100%, rgba(255,90,31,.32), rgba(255,90,31,0) 70%),
+             radial-gradient(60% 35% at 100% 55%, rgba(255,90,31,.16), rgba(255,90,31,0) 70%),
+             linear-gradient(180deg, rgba(13,13,16,.35), rgba(13,13,16,.82) 60%, rgba(13,13,16,.95))}
+.show::after{content:"";position:absolute;left:50%;top:-6%;width:160%;height:78%;z-index:-1;pointer-events:none;transform-origin:50% 0;translate:-50% 0;
+  background:conic-gradient(from 180deg at 50% 0%, rgba(255,232,205,0) 157deg, rgba(255,232,205,.11) 170deg, rgba(255,232,205,.17) 180deg, rgba(255,232,205,.11) 190deg, rgba(255,232,205,0) 203deg);
+  filter:blur(6px);animation:holofote 9s ease-in-out infinite alternate}
+@keyframes holofote{from{rotate:-6deg}to{rotate:6deg}}
+.parado.show::after{animation-play-state:paused}
 .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--lar);color:var(--bg);font:750 .76rem/1 var(--sans)}
 .pill i{width:7px;height:7px;border-radius:50%;background:var(--bg)}
 .show-topo{display:flex;align-items:center;gap:14px}
@@ -434,6 +458,9 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
     <symbol id="i-mic" viewBox="0 0 24 24"><rect x="8.5" y="3" width="7" height="11" rx="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
     <symbol id="i-sorriso" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 14c1 1.6 2.4 2.4 4 2.4s3-.8 4-2.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="9.5" r="1.2" fill="currentColor"/><circle cx="15" cy="9.5" r="1.2" fill="currentColor"/></symbol>
     <symbol id="i-cam" viewBox="0 0 24 24"><rect x="2.5" y="6" width="13" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15.5 10.5 6-3.5v10l-6-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-coracao" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.3C.9 8.2 2.9 4.5 6.6 4.5c2.1 0 3.6 1.1 5.4 3.1 1.8-2 3.3-3.1 5.4-3.1 3.7 0 5.7 3.7 4.2 7.2C19.5 16.4 12 21 12 21Z"/></symbol>
+    <symbol id="i-balao" viewBox="0 0 24 24"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.4 7.6L3.5 20.5l1.4-4.4A8.5 8.5 0 1 1 20.5 11.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-musica" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"/></symbol>
     <symbol id="i-mudo" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m16 9.5 5 5m0-5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
     <symbol id="i-som" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M16 9a4.2 4.2 0 0 1 0 6M18.6 6.4a8 8 0 0 1 0 11.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
@@ -455,10 +482,16 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
   <div class="foto" id="foto"><img src="img/nilson.webp" alt="Nilson Anesclar, humorista" width="900" height="900" fetchpriority="high"></div>
   <div class="voa a" data-fase="0"><div class="entra"><span class="cartao">
     <img src="img/clip-publi.jpg" alt="" width="300" height="534"><video src="img/clip-publi.mp4" muted playsinline loop autoplay preload="auto"></video>
-    <span class="rot"><i></i>Publis</span><span class="prog"><i></i></span></span></div></div>
+    <span class="reel-topo" aria-hidden="true">Reels<svg><use href="#i-cam"/></svg></span>
+    <span class="reel-acoes" aria-hidden="true"><span class="curtir"><svg><use href="#i-coracao"/></svg>139 mil</span><span><svg><use href="#i-balao"/></svg>8,7 mil</span><span><svg><use href="#i-dm"/></svg></span></span>
+    <span class="reel-base" aria-hidden="true"><span class="reel-user"><img src="img/nilson.webp" alt="" width="900" height="900"><b>nilson_anesclarjr</b><i>Seguir</i></span><span class="reel-cap">Quando você julga só pela aparência</span><span class="reel-audio"><svg><use href="#i-musica"/></svg>Áudio original</span></span>
+    <span class="prog"><i></i></span></span></div></div>
   <div class="voa b" data-fase="2.1"><div class="entra"><span class="cartao">
     <img src="img/clip-itinerante.jpg" alt="" width="300" height="534"><video src="img/clip-itinerante.mp4" muted playsinline loop autoplay preload="auto"></video>
-    <span class="rot"><i></i>Humor Itinerante</span><span class="prog"><i></i></span></span></div></div>
+    <span class="reel-topo" aria-hidden="true">Reels<svg><use href="#i-cam"/></svg></span>
+    <span class="reel-acoes" aria-hidden="true"><span class="curtir"><svg><use href="#i-coracao"/></svg>4,1 mil</span><span><svg><use href="#i-balao"/></svg>319</span><span><svg><use href="#i-dm"/></svg></span></span>
+    <span class="reel-base" aria-hidden="true"><span class="reel-user"><img src="img/nilson.webp" alt="" width="900" height="900"><b>nilson_anesclarjr</b><i>Seguir</i></span><span class="reel-cap">Humor Itinerante · Monobus</span><span class="reel-audio"><svg><use href="#i-musica"/></svg>Áudio original</span></span>
+    <span class="prog"><i></i></span></span></div></div>
 </header>
 
 <main class="conteudo">
