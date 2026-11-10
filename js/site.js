@@ -322,6 +322,16 @@ function quadroHero(agora) {
         requestAnimationFrame(quadroHero);
 }
 requestAnimationFrame(quadroHero);
+/* Celular em modo economia de bateria pode bloquear o autoplay: se bloquear, os vídeos do topo
+   começam no primeiro toque ou rolagem da pessoa. */
+const tocarTopo = () => {
+    $$('#hero video').forEach((v) => void v.play().catch(() => undefined));
+};
+$$('#hero video').forEach((v) => {
+    void v.play().catch(() => {
+        ['touchstart', 'pointerdown', 'scroll', 'keydown'].forEach((ev) => addEventListener(ev, tocarTopo, { once: true, passive: true }));
+    });
+});
 /* ---------------------------------------------------------------- laços param fora da tela */
 const pausaveis = [hero, talvez('.igc'), talvez('.show'), talvez('.serie'), talvez('#final')].filter((x) => !!x);
 const ioParado = new IntersectionObserver((es) => {
