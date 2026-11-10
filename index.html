@@ -80,7 +80,11 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
 .cartao{position:relative;display:block;width:clamp(100px, 29cqi, 196px);aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;
   box-shadow:0 0 0 1.5px rgba(255,244,236,.7), 0 30px 50px -18px rgba(70,12,0,.7)}
 .cartao{container-type:inline-size}
-.cartao>video,.cartao>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.reel-telas{position:absolute;inset:0;overflow:hidden;background:#000}
+.reel-telas .rp,.reel-telas .rv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.reel-telas .rv{will-change:transform}
+.reel-telas .rv:not(.ativo){transform:translateY(100%)}
+.reel-acoes b,.reel-cap{display:block}
 .cartao::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,0) 22%, rgba(0,0,0,0) 52%, rgba(0,0,0,.78) 100%)}
 .reel-topo,.reel-acoes,.reel-base{position:absolute;z-index:2;color:#fff;pointer-events:none}
@@ -480,16 +484,16 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
     <div class="fila fila-h contorno"><div class="rola" style="--d:38s"><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span><span>Anesclar</span></div></div>
   </div>
   <div class="foto" id="foto"><img src="img/nilson.webp" alt="Nilson Anesclar, humorista" width="900" height="900" fetchpriority="high"></div>
-  <div class="voa a" data-fase="0"><div class="entra"><span class="cartao">
-    <img src="img/clip-publi.jpg" alt="" width="300" height="534"><video src="img/clip-publi.mp4" muted playsinline loop autoplay preload="auto"></video>
+  <div class="voa a" data-fase="0" data-reels='[{"v": "img/r-oficina1.mp4", "p": "img/r-oficina1.jpg", "l": "139 mil", "c": "8,7 mil", "t": "Quando você julga só pela aparência"}, {"v": "img/r-acougue.mp4", "p": "img/r-acougue.jpg", "l": "62,2 mil", "c": "419", "t": "Traduzindo o cliente"}, {"v": "img/r-moveis.mp4", "p": "img/r-moveis.jpg", "l": "37,2 mil", "c": "799", "t": "Vendedor precisa ter bons argumentos"}, {"v": "img/r-oficina2.mp4", "p": "img/r-oficina2.jpg", "l": "95,5 mil", "c": "836", "t": "Sexta, 17h29. O cliente:"}, {"v": "img/r-viverbem.mp4", "p": "img/r-viverbem.jpg", "l": "12 mil", "c": "491", "t": "Esse sabe das coisas"}]'><div class="entra"><span class="cartao">
+    <span class="reel-telas"><img class="rp" src="img/r-oficina1.jpg" alt="" width="300" height="534"><video class="rv ativo" src="img/r-oficina1.mp4" poster="img/r-oficina1.jpg" muted playsinline autoplay preload="auto"></video><video class="rv" muted playsinline preload="none"></video></span>
     <span class="reel-topo" aria-hidden="true">Reels<svg><use href="#i-cam"/></svg></span>
-    <span class="reel-acoes" aria-hidden="true"><span class="curtir"><svg><use href="#i-coracao"/></svg>139 mil</span><span><svg><use href="#i-balao"/></svg>8,7 mil</span><span><svg><use href="#i-dm"/></svg></span></span>
+    <span class="reel-acoes" aria-hidden="true"><span class="curtir"><svg><use href="#i-coracao"/></svg><b class="n-l">139 mil</b></span><span><svg><use href="#i-balao"/></svg><b class="n-c">8,7 mil</b></span><span><svg><use href="#i-dm"/></svg></span></span>
     <span class="reel-base" aria-hidden="true"><span class="reel-user"><img src="img/nilson.webp" alt="" width="900" height="900"><b>nilson_anesclarjr</b><i>Seguir</i></span><span class="reel-cap">Quando você julga só pela aparência</span><span class="reel-audio"><svg><use href="#i-musica"/></svg>Áudio original</span></span>
     <span class="prog"><i></i></span></span></div></div>
-  <div class="voa b" data-fase="2.1"><div class="entra"><span class="cartao">
-    <img src="img/clip-itinerante.jpg" alt="" width="300" height="534"><video src="img/clip-itinerante.mp4" muted playsinline loop autoplay preload="auto"></video>
+  <div class="voa b" data-fase="2.1" data-reels='[{"v": "img/r-monobus.mp4", "p": "img/r-monobus.jpg", "l": "4,1 mil", "c": "319", "t": "Humor Itinerante · Monobus"}, {"v": "img/r-buracos.mp4", "p": "img/r-buracos.jpg", "l": "4,3 mil", "c": "498", "t": "Humor Itinerante · Buracos"}]'><div class="entra"><span class="cartao">
+    <span class="reel-telas"><img class="rp" src="img/r-monobus.jpg" alt="" width="300" height="534"><video class="rv ativo" src="img/r-monobus.mp4" poster="img/r-monobus.jpg" muted playsinline autoplay preload="auto"></video><video class="rv" muted playsinline preload="none"></video></span>
     <span class="reel-topo" aria-hidden="true">Reels<svg><use href="#i-cam"/></svg></span>
-    <span class="reel-acoes" aria-hidden="true"><span class="curtir"><svg><use href="#i-coracao"/></svg>4,1 mil</span><span><svg><use href="#i-balao"/></svg>319</span><span><svg><use href="#i-dm"/></svg></span></span>
+    <span class="reel-acoes" aria-hidden="true"><span class="curtir"><svg><use href="#i-coracao"/></svg><b class="n-l">4,1 mil</b></span><span><svg><use href="#i-balao"/></svg><b class="n-c">319</b></span><span><svg><use href="#i-dm"/></svg></span></span>
     <span class="reel-base" aria-hidden="true"><span class="reel-user"><img src="img/nilson.webp" alt="" width="900" height="900"><b>nilson_anesclarjr</b><i>Seguir</i></span><span class="reel-cap">Humor Itinerante · Monobus</span><span class="reel-audio"><svg><use href="#i-musica"/></svg>Áudio original</span></span>
     <span class="prog"><i></i></span></span></div></div>
 </header>

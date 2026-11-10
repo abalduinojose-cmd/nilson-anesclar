@@ -314,7 +314,104 @@ const hero = $('#hero');
 const muro = $('#muro');
 const foto = $('#foto');
 const voas = $$('.voa');
-const partes = voas.map((v) => ({ barra: $('.prog i', v), video: $<HTMLVideoElement>('video', v) }));
+
+/** Um Reel da lista de cada cartão do topo. */
+interface Reel {
+  v: string;
+  p: string;
+  l: string;
+  c: string;
+  t: string;
+}
+
+/**
+ * Cartão do topo no formato Reels: toca um clipe curto, e quando ele acaba o próximo Reel
+ * sobe por baixo (como deslizar no Instagram), trocando curtidas, comentários e legenda.
+ */
+class CartaoReel {
+  readonly barra: HTMLElement;
+  private readonly vids: HTMLVideoElement[];
+  private readonly lista: Reel[];
+  private i = 0;
+  private ativo = 0;
+  private trocando = false;
+
+  constructor(private readonly voa: HTMLElement) {
+    this.barra = $('.prog i', voa);
+    this.vids = $$<HTMLVideoElement>('.rv', voa);
+    this.lista = JSON.parse(voa.dataset.reels ?? '[]') as Reel[];
+    this.vids.forEach((v) => {
+      v.muted = true;
+      v.defaultMuted = true;
+      v.playsInline = true;
+      v.addEventListener('ended', () => void this.proximo());
+    });
+  }
+
+  get video(): HTMLVideoElement {
+    return this.vids[this.ativo];
+  }
+
+  tocar(): void {
+    const v = this.video;
+    v.muted = true;
+    if (v.paused) void v.play().catch(() => undefined);
+  }
+
+  pausar(): void {
+    this.vids.forEach((v) => v.pause());
+  }
+
+  private async proximo(): Promise<void> {
+    if (this.trocando) return;
+    if (this.lista.length < 2) {
+      this.video.currentTime = 0;
+      this.tocar();
+      return;
+    }
+    this.trocando = true;
+    const prox = (this.i + 1) % this.lista.length;
+    const r = this.lista[prox];
+    const atual = this.video;
+    const novo = this.vids[1 - this.ativo];
+    novo.poster = r.p;
+    novo.src = r.v;
+    novo.muted = true;
+    novo.load();
+    await new Promise<void>((ok) => {
+      novo.addEventListener('loadeddata', () => ok(), { once: true });
+      setTimeout(ok, 2500);
+    });
+    void novo.play().catch(() => undefined);
+    atual.getAnimations().forEach((a) => a.cancel());
+    novo.getAnimations().forEach((a) => a.cancel());
+    anima(atual, [{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], { duracao: 700, curva: 'expo' });
+    anima(novo, [{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duracao: 700, curva: 'expo' });
+    this.legenda(r);
+    setTimeout(() => {
+      atual.pause();
+      atual.classList.remove('ativo');
+      novo.classList.add('ativo');
+      this.ativo = 1 - this.ativo;
+      this.i = prox;
+      this.trocando = false;
+    }, 720);
+  }
+
+  private legenda(r: Reel): void {
+    const trocaTexto = (el: HTMLElement, txt: string): void => {
+      anima(el, [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-6px)' }], { duracao: 180, curva: 'in3' }).finished.then((a) => {
+        el.textContent = txt;
+        a.cancel();
+        anima(el, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }], { duracao: 380, curva: 'expo' });
+      });
+    };
+    trocaTexto($('.n-l', this.voa), r.l);
+    trocaTexto($('.n-c', this.voa), r.c);
+    trocaTexto($('.reel-cap', this.voa), r.t);
+  }
+}
+const cartoes = voas.map((v) => new CartaoReel(v));
 
 let heroVisivel = true;
 let alvoX = 0;
@@ -345,8 +442,9 @@ function quadroHero(agora: number): void {
     const y = Math.sin(s * (0.9 + i * 0.15) + fase) * 9 * K - rolagem * (0.22 + i * 0.1) * K + ponteiroY * (16 + i * 8);
     const x = ponteiroX * (24 + i * 14);
     v.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
-    const p = partes[i];
-    if (p.video.duration) p.barra.style.transform = 'scaleX(' + (p.video.currentTime / p.video.duration).toFixed(4) + ')';
+    const c = cartoes[i];
+    const vid = c.video;
+    if (vid.duration) c.barra.style.transform = 'scaleX(' + (vid.currentTime / vid.duration).toFixed(4) + ')';
   });
   muro.style.translate = (ponteiroX * -20).toFixed(1) + 'px calc(-50% + ' + (ponteiroY * -14 + rolagem * 0.4 * K).toFixed(1) + 'px)';
   foto.style.translate = (ponteiroX * 9).toFixed(1) + 'px ' + (rolagem * 0.12 * K).toFixed(1) + 'px';
@@ -354,16 +452,20 @@ function quadroHero(agora: number): void {
 }
 requestAnimationFrame(quadroHero);
 
-/* Celular em modo economia de bateria pode bloquear o autoplay: se bloquear, os vídeos do topo
-   começam no primeiro toque ou rolagem da pessoa. */
-const tocarTopo = (): void => {
-  $$<HTMLVideoElement>('#hero video').forEach((v) => void v.play().catch(() => undefined));
-};
-$$<HTMLVideoElement>('#hero video').forEach((v) => {
-  void v.play().catch(() => {
-    ['touchstart', 'pointerdown', 'scroll', 'keydown'].forEach((ev) => addEventListener(ev, tocarTopo, { once: true, passive: true }));
-  });
+/*
+ * Os Reels do topo têm de estar sempre rodando. Um vigia confere a cada segundo e retoma o vídeo
+ * que tiver parado (aba que volta do fundo, rede lenta, navegador que pausou sozinho). Se o celular
+ * bloquear o autoplay (modo economia de bateria), eles começam no primeiro toque ou clique.
+ */
+const tocarTopo = (): void => cartoes.forEach((c) => c.tocar());
+['touchend', 'click', 'keydown', 'pointerup'].forEach((ev) => addEventListener(ev, tocarTopo, { passive: true }));
+d.addEventListener('visibilitychange', () => {
+  if (!d.hidden && heroVisivel && !playerAberto) tocarTopo();
 });
+setInterval(() => {
+  if (!d.hidden && heroVisivel && !playerAberto) tocarTopo();
+}, 1000);
+tocarTopo();
 
 /* ---------------------------------------------------------------- laços param fora da tela */
 
@@ -376,7 +478,7 @@ const ioParado = new IntersectionObserver((es) => {
       const era = heroVisivel;
       heroVisivel = e.isIntersecting;
       if (heroVisivel && !era) requestAnimationFrame(quadroHero);
-      partes.forEach((p) => (e.isIntersecting && !playerAberto ? void p.video.play().catch(() => undefined) : p.video.pause()));
+      cartoes.forEach((c) => (e.isIntersecting && !playerAberto ? c.tocar() : c.pausar()));
     }
   });
 });
